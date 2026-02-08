@@ -4,12 +4,13 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Compass, Gem, Home, Mail, Sparkles } from "lucide-react";
+import { Compass, Gem, HelpCircle, Home, Mail, Sparkles } from "lucide-react";
 
 const navLinks = [
-  { href: "#top", label: "Hero", icon: Home },
-  { href: "#carousel", label: "Carousel", icon: Compass },
-  { href: "#tiles", label: "Tiles", icon: Gem },
+  { href: "#top", label: "Overview", icon: Home },
+  { href: "#carousel", label: "Solutions", icon: Compass },
+  { href: "#tiles", label: "Capabilities", icon: Gem },
+  { href: "#faq", label: "FAQ", icon: HelpCircle },
   { href: "#contact", label: "Contact", icon: Mail },
 ];
 
@@ -50,7 +51,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         className="orbital-rail" data-open={railOpen}
         aria-label="Experience navigation"
       >
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex w-full items-center justify-between gap-2 md:w-auto md:flex-col md:items-stretch">
           <Link href="/" className="rail-home focus-ring" aria-label="Back to top">
             <Image src="/logo.png" alt="Solid Scale Labs" width={30} height={30} className="rounded-lg border border-white/20 bg-white/10" />
             {railOpen && (
@@ -65,14 +66,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           </button>
         </div>
 
-        <div className="mt-1 grid gap-1">
+        <div className="mt-0 flex min-w-0 flex-1 items-center gap-1 overflow-x-auto pl-1 md:mt-1 md:grid md:w-full md:flex-none md:overflow-visible md:pl-0">
           {navLinks.map((link) => {
             const isActive = activeLink === link.href;
 
             return (
               <a key={link.href} href={link.href} className="focus-ring rail-link" aria-current={isActive ? "page" : undefined}>
                 <link.icon size={16} className={isActive ? "text-white" : "text-slate-300"} />
-                {railOpen && <span>{link.label}</span>}
+                {railOpen && <span className="hidden md:inline">{link.label}</span>}
                 {isActive && <motion.span layoutId="rail-active" className="rail-active" />}
               </a>
             );
