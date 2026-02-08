@@ -30,7 +30,11 @@ body::before {
 }
 
 .orbital-rail {
-  @apply fixed right-3 top-1/2 z-50 flex -translate-y-1/2 flex-col gap-2 rounded-2xl border border-white/15 bg-[#070a14]/75 p-2 backdrop-blur-xl md:right-6;
+  @apply fixed right-3 top-1/2 z-50 flex w-14 -translate-y-1/2 flex-col gap-2 overflow-hidden rounded-2xl border border-white/15 bg-[#070a14]/75 p-2 backdrop-blur-xl transition-[width] duration-300 md:right-6;
+}
+
+.orbital-rail[data-open="true"] {
+  @apply w-[14.5rem];
 }
 
 .rail-home,
@@ -38,21 +42,6 @@ body::before {
   @apply relative inline-flex items-center gap-2 rounded-xl px-2.5 py-2 text-sm text-slate-200 transition hover:bg-white/10;
 }
 
-.site-brand {
-  @apply fixed left-1/2 top-5 z-50 w-[min(92%,920px)] -translate-x-1/2 rounded-2xl border border-white/10 bg-[#050813]/70 px-4 py-3 backdrop-blur-xl md:px-5;
-}
-
-.floating-dock {
-  @apply fixed bottom-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white/15 bg-[#070a14]/75 p-1.5 backdrop-blur-xl;
-}
-
-.dock-item {
-  @apply relative inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm text-slate-200;
-}
-
-.dock-pill {
-  @apply absolute inset-0 -z-10 rounded-full border border-white/20 bg-white/15;
-}
 
 .rail-active {
   @apply absolute inset-0 -z-10 rounded-xl border border-white/20 bg-white/15;

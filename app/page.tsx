@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, MousePointer2, Sparkles, WandSparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Contact } from "@/components/sections/Contact";
 import { cn } from "@/lib/utils";
@@ -63,10 +63,19 @@ const stats = [
   ["2.8x", "More CTA interactions"],
 ] as const;
 
+const modes = [
+  { key: "neon", label: "Neon Pulse", accent: "#8eb2ff" },
+  { key: "violet", label: "Violet Flux", accent: "#cf97ff" },
+  { key: "aurora", label: "Aurora Blend", accent: "#89ffe0" },
+] as const;
+
 export default function Page() {
   const [activeSlide, setActiveSlide] = React.useState(0);
   const [spotlight, setSpotlight] = React.useState({ x: 50, y: 50 });
   const [activeTile, setActiveTile] = React.useState(0);
+  const [mode, setMode] = React.useState<(typeof modes)[number]>(modes[0]);
+  const [intensity, setIntensity] = React.useState(62);
+  const [velocity, setVelocity] = React.useState(48);
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 20, mass: 0.15 });
 
@@ -94,7 +103,7 @@ export default function Page() {
     <>
       <motion.div className="scroll-meter" style={{ scaleX: barScale }} />
 
-      <section className="relative overflow-hidden pb-20 pt-16 md:pt-20">
+      <section id="top" className="relative overflow-hidden pb-20 pt-16 md:pt-20">
         <motion.div style={{ y: floatY, rotate: floatRotate }} className="shape shape-a" />
         <motion.div style={{ x: orbX }} className="shape shape-b" />
         <div className="container grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
@@ -175,6 +184,57 @@ export default function Page() {
                 <button key={item.title} aria-label={`Slide ${idx + 1}`} onClick={() => setActiveSlide(idx)} className={cn("h-2.5 rounded-full transition", idx === activeSlide ? "w-8 bg-sky-200" : "w-2.5 bg-white/30")} />
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-20">
+        <div className="container">
+          <div className="grid gap-6 rounded-[1.6rem] border border-white/10 bg-white/[0.03] p-5 md:grid-cols-[1.05fr_.95fr] md:p-8">
+            <div>
+              <span className="eyebrow"><WandSparkles size={14} /> Live interaction lab</span>
+              <h2 className="mt-4 text-3xl font-semibold text-white md:text-5xl">Dial in the motion language in real time.</h2>
+              <p className="mt-4 text-slate-300">Switch vibe profiles and tune animation intensity. This gives stakeholders a tangible way to choose how bold the interface should feel.</p>
+              <div className="mt-6 grid gap-3">
+                <label className="text-sm text-slate-300">Intensity: <span className="text-white">{intensity}%</span></label>
+                <input type="range" min={20} max={100} value={intensity} onChange={(e) => setIntensity(Number(e.target.value))} className="accent-sky-300" />
+                <label className="text-sm text-slate-300">Velocity: <span className="text-white">{velocity}%</span></label>
+                <input type="range" min={10} max={100} value={velocity} onChange={(e) => setVelocity(Number(e.target.value))} className="accent-violet-300" />
+              </div>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {modes.map((entry) => (
+                  <button
+                    key={entry.key}
+                    onClick={() => setMode(entry)}
+                    className={cn(
+                      "focus-ring rounded-full border px-4 py-2 text-sm transition",
+                      mode.key === entry.key ? "border-white/40 bg-white/15 text-white" : "border-white/15 bg-white/[0.03] text-slate-300"
+                    )}
+                  >
+                    {entry.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <motion.div
+              className="relative overflow-hidden rounded-[1.3rem] border border-white/15 bg-[#090f22] p-5"
+              animate={{
+                background: `radial-gradient(circle at ${intensity}% ${100 - intensity / 2}%, ${mode.accent}55, rgba(12,16,32,0.95) 42%, rgba(7,10,20,1) 100%)`,
+              }}
+              transition={{ duration: 0.6 }}
+            >
+              <motion.div
+                animate={{ rotate: velocity * 1.2 }}
+                transition={{ duration: 8 - velocity / 18, repeat: Number.POSITIVE_INFINITY, repeatType: "reverse", ease: "easeInOut" }}
+                className="mx-auto mt-4 h-48 w-48 rounded-[36%_64%_57%_43%/42%_36%_64%_58%] border border-white/25"
+                style={{ background: `radial-gradient(circle at 25% 25%, ${mode.accent}, rgba(255,255,255,0.06) 60%)` }}
+              />
+              <div className="mt-6 grid gap-3">
+                <p className="inline-flex items-center gap-2 text-sm text-slate-200"><MousePointer2 size={14} /> Mode: {mode.label}</p>
+                <p className="text-sm text-slate-300">Current profile balances <span className="text-white">{intensity}% drama</span> with <span className="text-white">{velocity}% motion speed</span>.</p>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
