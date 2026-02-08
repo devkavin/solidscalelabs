@@ -1,183 +1,214 @@
 "use client";
 
 import * as React from "react";
-import { motion } from "framer-motion";
-import { ArrowRight, Dot, MoveRight, Sparkles } from "lucide-react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { ArrowRight, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Contact } from "@/components/sections/Contact";
 import { cn } from "@/lib/utils";
 
-const pillars = [
+const carouselItems = [
   {
-    key: "experience",
-    label: "Experience Architecture",
-    summary: "Flow-first design systems with cinematic polish and practical conversion intent.",
-    details: ["Narrative wireframes", "Motion rules", "Accessibility rhythm"],
+    title: "Prismatic Commerce",
+    tag: "E-commerce",
+    description: "Sculptural product storytelling with tactile transitions and velocity-based layout shifts.",
   },
   {
-    key: "product",
-    label: "Product Engineering",
-    summary: "Fast, resilient delivery with design parity from first commit to launch.",
-    details: ["Component contracts", "Performance budgets", "Instrumentation"],
+    title: "Atlas Command",
+    tag: "B2B SaaS",
+    description: "Data-heavy interface translated into a cinematic operations canvas with guided interaction rhythm.",
   },
   {
-    key: "growth",
-    label: "Growth Loops",
-    summary: "Experiment-ready funnels with measurable signals and iterative optimization.",
-    details: ["Conversion analytics", "Experiment backlog", "CRM-ready events"],
-  },
-];
-
-const projects = [
-  {
-    name: "Atlas Operations",
-    impact: "-41% incident resolution time",
-    brief: "Rebuilt a fragmented dashboard into a command-center experience with calmer density and clearer priority states.",
+    title: "Nova Mobility",
+    tag: "Product Launch",
+    description: "Editorial hero choreography with kinetic typography and adaptive call-to-action rails.",
   },
   {
-    name: "Helio Commerce",
-    impact: "+32% qualified demo requests",
-    brief: "Reframed the buyer journey around trust signals, proof rhythm, and progressive disclosure.",
-  },
-  {
-    name: "Northstar Platform",
-    impact: "2.2x faster feature shipping",
-    brief: "Unified tokens, components, and release workflows for consistent interface quality across teams.",
+    title: "Pulse Health",
+    tag: "Platform",
+    description: "Organic shape language and trust layers built for conversion, retention, and accessibility.",
   },
 ];
 
-const faqs = [
-  ["How custom is this approach?", "Every engagement is tailored to your business model, team velocity, and customer intent. We use systems, not templates."],
-  ["Is the experience heavy to load?", "No. Motion is purposeful and lightweight, and we prioritize core web vitals, code-splitting, and responsive performance."],
-  ["Can this scale across products?", "Yes. The system is designed as a reusable foundation with governance rules for multiple teams and verticals."],
+const tiles = [
+  {
+    title: "Scroll choreography",
+    body: "Layer speeds and reveal timing are tuned to create narrative flow rather than random animation noise.",
+  },
+  {
+    title: "Pointer-reactive surfaces",
+    body: "Tiles and hero surfaces react to cursor position with magnetic glow and parallax for tactile depth.",
+  },
+  {
+    title: "Fluid geometry",
+    body: "Soft brutalist corners and asymmetric blobs create a signature visual language across sections.",
+  },
+  {
+    title: "Conversion rhythm",
+    body: "CTA moments are spaced between kinetic sections to align emotion and intent during exploration.",
+  },
+  {
+    title: "Motion hierarchy",
+    body: "Primary actions get high-contrast motion cues while supporting content remains calm and readable.",
+  },
+  {
+    title: "Living layout",
+    body: "The grid shifts from magazine to cinematic proportions while preserving responsive behavior.",
+  },
+];
+
+const stats = [
+  ["+46%", "Average engagement lift"],
+  ["38%", "Faster perceived navigation"],
+  ["2.8x", "More CTA interactions"],
 ] as const;
 
 export default function Page() {
-  const [activePillar, setActivePillar] = React.useState(pillars[0].key);
-  const [activeProject, setActiveProject] = React.useState(0);
-  const [openFaq, setOpenFaq] = React.useState(0);
+  const [activeSlide, setActiveSlide] = React.useState(0);
+  const [spotlight, setSpotlight] = React.useState({ x: 50, y: 50 });
+  const [activeTile, setActiveTile] = React.useState(0);
+  const { scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 20, mass: 0.15 });
 
-  const currentPillar = pillars.find((x) => x.key === activePillar) ?? pillars[0];
+  const floatY = useTransform(smoothProgress, [0, 1], [0, -180]);
+  const floatRotate = useTransform(smoothProgress, [0, 1], [0, 22]);
+  const orbX = useTransform(smoothProgress, [0, 1], [-80, 120]);
+  const barScale = useTransform(smoothProgress, [0, 1], [0.12, 1]);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % carouselItems.length);
+    }, 4400);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const moveSlide = (direction: "next" | "prev") => {
+    setActiveSlide((prev) => {
+      if (direction === "next") return (prev + 1) % carouselItems.length;
+      return (prev - 1 + carouselItems.length) % carouselItems.length;
+    });
+  };
 
   return (
     <>
-      <section className="hero-shell relative overflow-hidden pb-16 pt-16 md:pb-24 md:pt-20">
-        <div className="container">
-          <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:items-end">
-            <div>
-              <span className="eyebrow"><Sparkles size={14} /> Curated digital product experiences</span>
-              <h1 className="mt-6 max-w-4xl text-balance text-4xl font-semibold leading-[0.96] tracking-tight text-white md:text-7xl">
-                A complete visual and interaction overhaul built for <span className="text-gradient">clarity, confidence, and conversion.</span>
-              </h1>
-              <p className="mt-6 max-w-2xl text-pretty text-base text-slate-300 md:text-lg">
-                Inspired by world-class editorial product design: refined typography, intentional motion, layered depth, and responsive behavior that feels premium without noise.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a href="#contact"><Button variant="primary" size="lg">Start your redesign <ArrowRight size={17} /></Button></a>
-                <a href="#work"><Button size="lg">See interaction concepts <MoveRight size={17} /></Button></a>
-              </div>
-            </div>
-            <div className="glass-panel p-6 md:p-7">
-              <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Design pulse</p>
-              <div className="mt-4 grid gap-3">
-                {[
-                  ["Perceived performance", "Fluid transitions + meaningful skeleton states"],
-                  ["Content hierarchy", "Magazine-like rhythm for scanning and action"],
-                  ["Conversion intent", "Strategic CTA cadence with contextual proof"],
-                ].map(([title, desc]) => (
-                  <div key={title} className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-                    <p className="text-sm font-medium text-white">{title}</p>
-                    <p className="mt-1 text-sm text-slate-300">{desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <motion.div className="scroll-meter" style={{ scaleX: barScale }} />
 
-      <section id="services" className="py-16 md:py-20">
-        <div className="container grid gap-8 lg:grid-cols-[.8fr_1.2fr]">
+      <section className="relative overflow-hidden pb-20 pt-16 md:pt-20">
+        <motion.div style={{ y: floatY, rotate: floatRotate }} className="shape shape-a" />
+        <motion.div style={{ x: orbX }} className="shape shape-b" />
+        <div className="container grid gap-10 lg:grid-cols-[1.05fr_.95fr] lg:items-center">
           <div>
-            <span className="eyebrow">Service matrix</span>
-            <h2 className="mt-4 text-3xl font-semibold text-white md:text-5xl">Interactive capabilities with clear depth.</h2>
+            <span className="eyebrow"><Sparkles size={14} /> Artistic interaction redesign</span>
+            <h1 className="mt-6 max-w-4xl text-balance text-5xl font-semibold leading-[0.9] tracking-tight text-white md:text-8xl">
+              A complete
+              <span className="block text-gradient">Awwwards-style visual transformation</span>
+              with scroll-reactive storytelling.
+            </h1>
+            <p className="mt-6 max-w-2xl text-pretty text-base text-slate-300 md:text-lg">
+              The interface now behaves like a living exhibition: tile systems, kinetic transitions, and experimental layout compositions that still prioritize clarity and conversion.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="#carousel"><Button variant="primary" size="lg">Explore carousel <ArrowRight size={16} /></Button></a>
+              <a href="#tiles"><Button size="lg">Open tile lab</Button></a>
+            </div>
           </div>
-          <div className="glass-panel p-5 md:p-6">
-            <div className="flex flex-wrap gap-2">
-              {pillars.map((pillar) => (
+
+          <div
+            className="art-card"
+            onMouseMove={(event) => {
+              const rect = (event.currentTarget as HTMLDivElement).getBoundingClientRect();
+              const x = ((event.clientX - rect.left) / rect.width) * 100;
+              const y = ((event.clientY - rect.top) / rect.height) * 100;
+              setSpotlight({ x, y });
+            }}
+          >
+            <div className="art-card__glow" style={{ background: `radial-gradient(circle at ${spotlight.x}% ${spotlight.y}%, rgba(125,163,255,.32), rgba(131,84,255,.05) 34%, rgba(0,0,0,0) 72%)` }} />
+            <p className="text-xs uppercase tracking-[0.25em] text-slate-400">Interactive DNA</p>
+            <div className="mt-5 grid gap-3">
+              {tiles.slice(0, 3).map((item, idx) => (
                 <button
-                  key={pillar.key}
-                  onClick={() => setActivePillar(pillar.key)}
-                  className={cn(
-                    "focus-ring rounded-full border px-4 py-2 text-sm transition",
-                    activePillar === pillar.key ? "border-white/40 bg-white/15 text-white" : "border-white/10 bg-white/[0.03] text-slate-300 hover:bg-white/[0.07]"
-                  )}
+                  key={item.title}
+                  onMouseEnter={() => setActiveTile(idx)}
+                  onFocus={() => setActiveTile(idx)}
+                  className={cn("tile-chip focus-ring", idx === activeTile ? "tile-chip--active" : "")}
                 >
-                  {pillar.label}
+                  <p className="font-medium text-white">{item.title}</p>
+                  <p className="mt-1 text-sm text-slate-300">{item.body}</p>
                 </button>
               ))}
             </div>
-            <motion.div key={currentPillar.key} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-6">
-              <p className="text-xl font-medium text-white">{currentPillar.summary}</p>
-              <ul className="mt-4 grid gap-2 text-sm text-slate-300 sm:grid-cols-3">
-                {currentPillar.details.map((item) => (
-                  <li key={item} className="rounded-xl border border-white/10 bg-black/20 p-3">{item}</li>
-                ))}
-              </ul>
-            </motion.div>
           </div>
         </div>
       </section>
 
-      <section id="work" className="py-16 md:py-20">
+      <section id="carousel" className="py-16 md:py-20">
         <div className="container">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <span className="eyebrow">Selected transformations</span>
-              <h2 className="mt-4 text-3xl font-semibold text-white md:text-5xl">Proof-led design outcomes.</h2>
+              <span className="eyebrow">Featured carousel</span>
+              <h2 className="mt-4 text-3xl font-semibold text-white md:text-5xl">Showcase reel with fluid transitions.</h2>
             </div>
-            <div className="text-sm text-slate-400">Use the cards to switch context.</div>
+            <div className="flex gap-2">
+              <button className="focus-ring icon-btn" onClick={() => moveSlide("prev")} aria-label="Previous slide"><ChevronLeft size={16} /></button>
+              <button className="focus-ring icon-btn" onClick={() => moveSlide("next")} aria-label="Next slide"><ChevronRight size={16} /></button>
+            </div>
           </div>
-          <div className="mt-7 grid gap-4 lg:grid-cols-[1fr_1.2fr]">
-            <div className="grid gap-3">
-              {projects.map((project, idx) => (
-                <button key={project.name} onClick={() => setActiveProject(idx)} className={cn("focus-ring rounded-2xl border p-4 text-left transition", idx === activeProject ? "border-sky-200/50 bg-sky-300/10" : "border-white/10 bg-white/[0.02] hover:bg-white/[0.06]")}>
-                  <p className="font-medium text-white">{project.name}</p>
-                  <p className="mt-1 text-sm text-slate-400">{project.impact}</p>
-                </button>
+
+          <div className="mt-7 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.03] p-3 md:p-5">
+            <motion.div className="flex" animate={{ x: `-${activeSlide * 100}%` }} transition={{ type: "spring", stiffness: 110, damping: 20 }}>
+              {carouselItems.map((item) => (
+                <article key={item.title} className="min-w-full p-2 md:p-4">
+                  <div className="carousel-tile">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.24em] text-slate-400">{item.tag}</p>
+                      <p className="mt-5 text-3xl font-semibold text-white md:text-5xl">{item.title}</p>
+                      <p className="mt-3 max-w-xl text-slate-300">{item.description}</p>
+                    </div>
+                    <div className="carousel-shape" />
+                  </div>
+                </article>
+              ))}
+            </motion.div>
+            <div className="mt-3 flex justify-center gap-2">
+              {carouselItems.map((item, idx) => (
+                <button key={item.title} aria-label={`Slide ${idx + 1}`} onClick={() => setActiveSlide(idx)} className={cn("h-2.5 rounded-full transition", idx === activeSlide ? "w-8 bg-sky-200" : "w-2.5 bg-white/30")} />
               ))}
             </div>
-            <motion.article key={projects[activeProject].name} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="glass-panel p-6">
-              <p className="text-sm uppercase tracking-[0.2em] text-slate-400">Case narrative</p>
-              <p className="mt-4 text-2xl font-semibold text-white">{projects[activeProject].name}</p>
-              <p className="mt-3 text-base text-slate-300">{projects[activeProject].brief}</p>
-              <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-emerald-300/30 bg-emerald-400/10 px-4 py-2 text-sm text-emerald-200">
-                <Dot size={20} /> {projects[activeProject].impact}
-              </div>
-            </motion.article>
           </div>
         </div>
       </section>
 
-      <section id="faq" className="py-16 md:py-20">
-        <div className="container max-w-4xl">
-          <span className="eyebrow">FAQ</span>
-          <div className="mt-4 grid gap-3">
-            {faqs.map(([question, answer], idx) => {
-              const isOpen = idx === openFaq;
-              return (
-                <div key={question} className="glass-panel overflow-hidden">
-                  <button className="focus-ring flex w-full items-center justify-between px-5 py-4 text-left" onClick={() => setOpenFaq(isOpen ? -1 : idx)}>
-                    <span className="font-medium text-white">{question}</span>
-                    <span className="text-sm text-slate-400">{isOpen ? "Close" : "Open"}</span>
-                  </button>
-                  <div className={cn("grid transition-all duration-300", isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
-                    <p className="overflow-hidden px-5 pb-5 text-slate-300">{answer}</p>
-                  </div>
-                </div>
-              );
-            })}
+      <section id="tiles" className="relative py-16 md:py-20">
+        <motion.div style={{ y: floatY }} className="shape shape-c" />
+        <div className="container">
+          <span className="eyebrow">Interactive tiles</span>
+          <h2 className="mt-4 max-w-3xl text-3xl font-semibold text-white md:text-5xl">From card stack to kinetic tile system.</h2>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {tiles.map((tile, idx) => (
+              <motion.button
+                key={tile.title}
+                onMouseEnter={() => setActiveTile(idx)}
+                onFocus={() => setActiveTile(idx)}
+                whileHover={{ y: -8, rotateX: 4, rotateY: idx % 2 ? -3 : 3 }}
+                className={cn("focus-ring feature-tile", activeTile === idx ? "feature-tile--active" : "")}
+              >
+                <p className="text-lg font-semibold text-white">{tile.title}</p>
+                <p className="mt-2 text-sm text-slate-300">{tile.body}</p>
+              </motion.button>
+            ))}
           </div>
+        </div>
+      </section>
+
+      <section className="relative py-16 md:py-24">
+        <div className="container grid gap-6 md:grid-cols-3">
+          {stats.map(([value, label], idx) => (
+            <motion.div key={label} className="metric-tile" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.45 }} transition={{ duration: 0.45, delay: idx * 0.06 }}>
+              <p className="text-4xl font-semibold text-white md:text-5xl">{value}</p>
+              <p className="mt-2 text-sm text-slate-300">{label}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
