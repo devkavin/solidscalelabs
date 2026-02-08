@@ -30,16 +30,16 @@ body::before {
 }
 
 .orbital-rail {
-  @apply fixed right-3 top-1/2 z-50 flex w-14 -translate-y-1/2 flex-col gap-2 overflow-hidden rounded-2xl border border-white/15 bg-[#070a14]/75 p-2 backdrop-blur-xl transition-[width] duration-300 md:right-6;
+  @apply fixed inset-x-3 top-3 z-50 flex w-auto flex-row items-center gap-2 overflow-hidden rounded-2xl border border-white/15 bg-[#070a14]/85 p-2 backdrop-blur-xl transition-all duration-300 md:inset-auto md:right-6 md:top-1/2 md:w-14 md:-translate-y-1/2 md:flex-col;
 }
 
 .orbital-rail[data-open="true"] {
-  @apply w-[14.5rem];
+  @apply md:w-[14.5rem];
 }
 
 .rail-home,
 .rail-link {
-  @apply relative inline-flex items-center gap-2 rounded-xl px-2.5 py-2 text-sm text-slate-200 transition hover:bg-white/10;
+  @apply relative inline-flex items-center gap-2 rounded-xl px-2 py-2 text-sm text-slate-200 transition hover:bg-white/10 md:px-2.5;
 }
 
 
