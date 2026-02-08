@@ -44,14 +44,14 @@ export function Contact() {
           <div className="grid gap-8 md:grid-cols-[1.05fr_.95fr] md:items-start">
             <div>
               <div className="badge"><span className="font-mono text-[11px] tracking-[0.18em]">CONTACT</span></div>
-              <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight md:text-4xl">Let’s craft an experience your market remembers.</h2>
+              <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight md:text-4xl">Make visitors ask: “Can you do this for us?”</h2>
               <p className="mt-3 max-w-2xl text-pretty text-base text-slate-300">
-                Share your goals and constraints. We’ll respond with a focused UX + engineering plan and rollout path.
+                Tell us what you’re building. We’ll reply with a practical plan, timeline, and options — optimized for your constraints.
               </p>
 
               <div className="mt-6 grid gap-3 text-sm text-slate-300">
                 <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-xs font-mono tracking-[0.16em] text-slate-400">ENGAGEMENT BLUEPRINT</div>
+                  <div className="text-xs font-mono tracking-[0.16em] text-slate-400">WHAT YOU GET</div>
                   <ul className="mt-2 grid gap-2">
                     <li>• Clear scope + deliverables</li>
                     <li>• UX-focused layout + components</li>
