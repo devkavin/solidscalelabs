@@ -25,10 +25,9 @@ body::before {
   mask-image: radial-gradient(circle at 36% 18%, black 12%, transparent 82%);
 }
 
-::selection { background: rgba(141, 176, 255, 0.45); }
-a { @apply text-inherit; }
-
-.focus-ring { @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060811]; }
+::selection {
+  background: rgba(141, 176, 255, 0.45);
+}
 
 .orbital-rail {
   @apply fixed right-3 top-1/2 z-50 flex -translate-y-1/2 flex-col gap-2 rounded-2xl border border-white/15 bg-[#070a14]/75 p-2 backdrop-blur-xl md:right-6;
@@ -39,8 +38,20 @@ a { @apply text-inherit; }
   @apply relative inline-flex items-center gap-2 rounded-xl px-2.5 py-2 text-sm text-slate-200 transition hover:bg-white/10;
 }
 
-.rail-label {
-  @apply hidden pr-1 text-xs uppercase tracking-[0.17em] text-slate-300 md:block;
+.site-brand {
+  @apply fixed left-1/2 top-5 z-50 w-[min(92%,920px)] -translate-x-1/2 rounded-2xl border border-white/10 bg-[#050813]/70 px-4 py-3 backdrop-blur-xl md:px-5;
+}
+
+.floating-dock {
+  @apply fixed bottom-5 left-1/2 z-50 flex -translate-x-1/2 items-center gap-1 rounded-full border border-white/15 bg-[#070a14]/75 p-1.5 backdrop-blur-xl;
+}
+
+.dock-item {
+  @apply relative inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm text-slate-200;
+}
+
+.dock-pill {
+  @apply absolute inset-0 -z-10 rounded-full border border-white/20 bg-white/15;
 }
 
 .rail-active {
@@ -67,20 +78,38 @@ a { @apply text-inherit; }
   background: linear-gradient(90deg, #8eb2ff, #cf97ff);
 }
 
-.cursor-aura {
-  position: fixed;
-  width: 360px;
-  height: 360px;
-  border-radius: 50%;
+.shape {
+  position: absolute;
   pointer-events: none;
-  z-index: 1;
-  background: radial-gradient(circle, rgba(125, 165, 255, 0.26), rgba(177, 108, 255, 0.08) 45%, rgba(0, 0, 0, 0) 70%);
+  filter: blur(1px);
 }
 
-.shape { position: absolute; pointer-events: none; filter: blur(1px); }
-.shape-a { top: -7rem; right: -6rem; width: 22rem; height: 22rem; border-radius: 38% 62% 46% 54% / 41% 33% 67% 59%; background: radial-gradient(circle at 35% 35%, rgba(175, 203, 255, 0.54), rgba(82, 105, 255, 0.12) 58%, transparent 78%); }
-.shape-b { bottom: 10%; right: 8%; width: 14rem; height: 14rem; border-radius: 63% 37% 52% 48% / 56% 43% 57% 44%; background: radial-gradient(circle at 40% 40%, rgba(196, 144, 255, 0.35), rgba(145, 86, 255, 0.06) 65%, transparent 79%); }
-.shape-c { left: -4rem; top: 1rem; width: 18rem; height: 18rem; border-radius: 50%; background: radial-gradient(circle, rgba(101, 145, 255, 0.2), transparent 70%); }
+.shape-a {
+  top: -7rem;
+  right: -6rem;
+  width: 22rem;
+  height: 22rem;
+  border-radius: 38% 62% 46% 54% / 41% 33% 67% 59%;
+  background: radial-gradient(circle at 35% 35%, rgba(175, 203, 255, 0.54), rgba(82, 105, 255, 0.12) 58%, transparent 78%);
+}
+
+.shape-b {
+  bottom: 10%;
+  right: 8%;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 63% 37% 52% 48% / 56% 43% 57% 44%;
+  background: radial-gradient(circle at 40% 40%, rgba(196, 144, 255, 0.35), rgba(145, 86, 255, 0.06) 65%, transparent 79%);
+}
+
+.shape-c {
+  left: -4rem;
+  top: 1rem;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(101, 145, 255, 0.2), transparent 70%);
+}
 
 .art-card {
   position: relative;
@@ -92,13 +121,27 @@ a { @apply text-inherit; }
   backdrop-filter: blur(12px);
 }
 
-.art-card__glow { position: absolute; inset: 0; pointer-events: none; }
+.art-card__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
 
-.tile-chip { @apply rounded-2xl border border-white/10 bg-white/[0.035] p-4 text-left text-sm transition; }
-.tile-chip--active { @apply border-sky-300/40 bg-sky-300/10; }
+.tile-chip {
+  @apply rounded-2xl border border-white/10 bg-white/[0.035] p-4 text-left transition;
+}
 
-.icon-btn { @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/[0.04] text-slate-200 transition hover:bg-white/[0.14]; }
-.carousel-tile { @apply grid gap-6 rounded-[1.4rem] border border-white/10 bg-[#0a0f1e]/85 p-6 md:grid-cols-[1fr_.85fr] md:p-10; }
+.tile-chip--active {
+  @apply border-sky-300/40 bg-sky-300/10;
+}
+
+.icon-btn {
+  @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/[0.04] text-slate-200 transition hover:bg-white/[0.14];
+}
+
+.carousel-tile {
+  @apply grid gap-6 rounded-[1.4rem] border border-white/10 bg-[#0a0f1e]/85 p-6 md:grid-cols-[1fr_.85fr] md:p-10;
+}
 
 .carousel-shape {
   min-height: 220px;
@@ -110,10 +153,19 @@ a { @apply text-inherit; }
     linear-gradient(145deg, rgba(94, 129, 255, 0.27), rgba(180, 89, 255, 0.08));
 }
 
+.feature-tile {
+  @apply rounded-[1.2rem] border border-white/10 bg-white/[0.03] p-5 text-left transition;
+  transform-style: preserve-3d;
+}
+
+.feature-tile--active {
+  @apply border-violet-200/40 bg-violet-300/10;
+}
+
+.metric-tile {
+  @apply rounded-[1.1rem] border border-white/10 bg-white/[0.035] p-5 shadow-soft md:p-7;
+  backdrop-filter: blur(8px);
+}
+
 .feature-tile { @apply rounded-[1.2rem] border border-white/10 bg-white/[0.03] p-5 text-left transition; transform-style: preserve-3d; }
 .feature-tile--active { @apply border-violet-200/40 bg-violet-300/10; }
-
-
-.faq-tile { @apply overflow-hidden rounded-2xl border border-cyan-200/20 bg-[linear-gradient(130deg,rgba(78,132,255,0.14),rgba(188,91,255,0.08))] backdrop-blur-md; }
-.faq-tile--active { @apply border-cyan-200/50 shadow-glow; }
-.faq-badge { @apply rounded-full border border-cyan-200/40 bg-cyan-200/10 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-cyan-100; }
