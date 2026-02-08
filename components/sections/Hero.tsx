@@ -1,9 +1,10 @@
 "use client";
 
+import * as React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { ArrowRight, ShieldCheck, Sparkles, Gauge } from "lucide-react";
+import { ArrowRight, ShieldCheck, Sparkles, Gauge, Compass, Rocket } from "lucide-react";
 
 const bullets = [
   { icon: Sparkles, label: "Narrative-first UI direction" },
@@ -11,7 +12,20 @@ const bullets = [
   { icon: Gauge, label: "Web-vitals obsessed execution" },
 ];
 
+const reel = [
+  { title: "Product Launch Lab", note: "MVP + scale path in 5 weeks", icon: Rocket },
+  { title: "UX Intelligence", note: "Heatmaps + conversion loops", icon: Compass },
+  { title: "Premium Engineering", note: "Design system + reliable CI", icon: ShieldCheck },
+];
+
 export function Hero() {
+  const [active, setActive] = React.useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => setActive((p) => (p + 1) % reel.length), 3200);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="relative overflow-hidden pb-12 pt-14 md:pt-20">
       <div className="pointer-events-none absolute -left-20 top-10 h-72 w-72 rounded-full bg-sky-500/20 blur-[110px]" />
@@ -21,7 +35,7 @@ export function Hero() {
         <div>
           <div className="badge">
             <span className="h-2 w-2 rounded-full bg-emerald-400" />
-            <span className="font-mono text-[11px] tracking-[0.2em]">AWWWARDS-INSPIRED PREMIUM EXPERIENCE</span>
+            <span className="font-mono text-[11px] tracking-[0.2em]">INTERACTIVE EXPERIENCE STUDIO</span>
           </div>
 
           <motion.h1
@@ -30,7 +44,7 @@ export function Hero() {
             transition={{ duration: 0.55 }}
             className="mt-5 text-balance text-4xl font-extrabold leading-[1.02] tracking-tight md:text-7xl"
           >
-            Digital products that feel <span className="showcase-text">cinematic</span> and convert like a machine.
+            Build faster with a <span className="showcase-text">living product experience</span>, not static pages.
           </motion.h1>
 
           <motion.p
@@ -39,7 +53,8 @@ export function Hero() {
             transition={{ duration: 0.55, delay: 0.08 }}
             className="mt-5 max-w-2xl text-pretty text-base text-slate-300 md:text-lg"
           >
-            We elevated this experience with bold visual hierarchy, layered depth, immersive gradients, and a conversion-driven layout system inspired by top-tier creative studios.
+            We revamped the entire interface into an immersive, conversion-focused journey with responsive ambient visuals,
+            richer interactions, and modular components designed for scale.
           </motion.p>
 
           <motion.div
@@ -80,34 +95,31 @@ export function Hero() {
 
           <div className="hr my-5" />
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            <MiniStat label="Visual language" value="Editorial + high contrast" />
-            <MiniStat label="Motion behavior" value="Subtle, confident, purposeful" />
-            <MiniStat label="Architecture" value="Sectional + modular" />
-            <MiniStat label="Conversion UX" value="Narrative CTA placement" />
-          </div>
-
-          <div className="hr my-5" />
-
           <div className="rounded-2xl border border-white/10 bg-black/25 p-4">
-            <div className="text-sm font-semibold">Interface rhythm preview</div>
-            <div className="mt-3 grid gap-2">
-              <div className="h-10 rounded-xl border border-white/15 bg-gradient-to-r from-sky-400/25 to-violet-500/25 transition hover:from-sky-400/40 hover:to-violet-500/40" />
-              <div className="h-10 rounded-xl border border-white/15 bg-gradient-to-r from-white/10 to-white/0 transition hover:from-white/20 hover:to-white/5" />
-              <div className="h-10 rounded-xl border border-white/15 bg-gradient-to-r from-emerald-400/15 to-sky-400/15 transition hover:from-emerald-400/30 hover:to-sky-400/30" />
+            <div className="text-sm font-semibold">Live capabilities reel</div>
+            <div className="mt-3 space-y-2">
+              {reel.map((item, i) => (
+                <button
+                  key={item.title}
+                  onClick={() => setActive(i)}
+                  className={`focus-ring flex w-full items-center justify-between rounded-xl border px-3 py-2 text-left transition ${
+                    active === i ? "border-sky-300/35 bg-sky-400/10" : "border-white/10 bg-white/[0.02] hover:bg-white/[0.05]"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <item.icon size={15} className={active === i ? "text-sky-200" : "text-slate-300"} />
+                    <div>
+                      <div className="text-sm font-semibold">{item.title}</div>
+                      <div className="text-xs text-slate-400">{item.note}</div>
+                    </div>
+                  </div>
+                  <span className="kbd">0{i + 1}</span>
+                </button>
+              ))}
             </div>
           </div>
         </motion.div>
       </div>
     </section>
-  );
-}
-
-function MiniStat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition hover:bg-white/[0.07]">
-      <div className="text-[11px] font-mono tracking-[0.16em] text-slate-400">{label.toUpperCase()}</div>
-      <div className="mt-1 text-sm font-semibold text-slate-100">{value}</div>
-    </div>
   );
 }

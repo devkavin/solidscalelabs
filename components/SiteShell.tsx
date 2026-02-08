@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
+import { buttonVariants } from "@/components/ui/Button";
 
 const navLinks = [
   { href: "#services", label: "Services" },
@@ -13,7 +13,7 @@ const navLinks = [
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-base-950/60 backdrop-blur-2xl">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-base-950/70 backdrop-blur-xl">
         <div className="container flex items-center justify-between gap-4 py-4">
           <Link href="/" className="flex items-center gap-3">
             <Image src="/logo.png" alt="Solid Scale Labs" width={40} height={40} className="rounded-xl border border-white/15 bg-white/5 shadow-glow" />
@@ -31,20 +31,18 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             ))}
           </nav>
 
-          <a href="#contact" className="hidden md:block">
-            <Button variant="primary" size="md">
-              Start a project <span className="kbd">↵</span>
-            </Button>
-          </a>
-          <a href="#contact" className="md:hidden">
-            <Button variant="primary" size="md">Contact</Button>
-          </a>
+          <Link href="#contact" className={buttonVariants({ variant: "primary", size: "md", className: "hidden md:inline-flex" })}>
+            Start a project <span className="kbd">↵</span>
+          </Link>
+          <Link href="#contact" className={buttonVariants({ variant: "primary", size: "md", className: "md:hidden" })}>
+            Contact
+          </Link>
         </div>
       </header>
 
       <main className="relative">
-        <div className="pointer-events-none absolute inset-0 -z-10 grid-overlay opacity-60" />
-        <div className="pointer-events-none absolute inset-0 -z-10 scanlines" />
+        <div className="pointer-events-none absolute inset-0 -z-10 grid-overlay opacity-45" />
+        <div className="pointer-events-none absolute inset-0 -z-10 ambient-noise" />
         {children}
       </main>
 

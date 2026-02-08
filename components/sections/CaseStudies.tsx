@@ -2,23 +2,23 @@
 
 import * as React from "react";
 import { Button } from "@/components/ui/Button";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, CirclePlay } from "lucide-react";
 
 const items = [
   {
-    title: "Operations dashboard",
+    title: "Operations command center",
     tag: "Observability",
     desc: "Unified metrics + alerts that reduce mean time to resolution.",
     bullets: ["Role-based views", "Live KPIs", "Audit trails"],
   },
   {
-    title: "Procurement workflow",
+    title: "Procurement workflow engine",
     tag: "Automation",
     desc: "Automated approvals and notifications across multi-stage processes.",
     bullets: ["Rules engine", "Email/WhatsApp triggers", "Exportable reports"],
   },
   {
-    title: "Multi-tenant platform",
+    title: "Multi-tenant platform suite",
     tag: "Scale",
     desc: "Tenant isolation with consistent config and billing hooks.",
     bullets: ["Tenant-aware data layer", "Per-tenant config", "Performance budgets"],
@@ -29,13 +29,18 @@ export function CaseStudies() {
   const [idx, setIdx] = React.useState(0);
   const item = items[idx];
 
+  React.useEffect(() => {
+    const timer = setInterval(() => setIdx((p) => (p + 1) % items.length), 5500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section id="work" className="py-16">
       <div className="container">
         <div className="badge"><span className="font-mono text-[11px] tracking-[0.18em]">WORK</span></div>
-        <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight md:text-4xl">Transformation previews.</h2>
+        <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight md:text-4xl">Transformation carousel.</h2>
         <p className="mt-3 max-w-3xl text-pretty text-base text-slate-300">
-          High-impact concepts showing how product thinking and premium UI drive measurable outcomes.
+          Swipe through outcomes to inspect architecture decisions, UX patterns, and business impact.
         </p>
 
         <div className="mt-8 grid gap-4 md:grid-cols-[1.05fr_.95fr]">
@@ -73,8 +78,13 @@ export function CaseStudies() {
           </div>
 
           <div className="card p-6">
-            <div className="text-sm font-extrabold">Showcase index</div>
-            <p className="mt-1 text-sm text-slate-300">Browse concepts and inspect narrative direction.</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm font-extrabold">Preview rail</div>
+                <p className="mt-1 text-sm text-slate-300">Quickly jump across concepts.</p>
+              </div>
+              <CirclePlay size={18} className="text-sky-200" />
+            </div>
             <div className="hr my-4" />
             <div className="grid gap-2">
               {items.map((x, i) => (
@@ -93,6 +103,16 @@ export function CaseStudies() {
                     <span className="kbd">{String(i + 1).padStart(2, "0")}</span>
                   </div>
                 </button>
+              ))}
+            </div>
+            <div className="mt-5 flex justify-center gap-2">
+              {items.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIdx(i)}
+                  aria-label={`Go to card ${i + 1}`}
+                  className={`h-2.5 rounded-full transition-all ${i === idx ? "w-8 bg-sky-300" : "w-2.5 bg-white/30 hover:bg-white/50"}`}
+                />
               ))}
             </div>
           </div>
