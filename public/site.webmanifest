@@ -1,0 +1,14 @@
+{
+  "name": "Solid Scale Labs",
+  "short_name": "SolidScale",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#050712",
+  "background_color": "#050712",
+  "display": "standalone"
+}

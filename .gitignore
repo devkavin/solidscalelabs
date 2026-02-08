@@ -1,0 +1,81 @@
+# =========================
+# Dependencies
+# =========================
+node_modules/
+.pnpm-store/
+.pnp/
+.pnp.js
+
+# =========================
+# Next.js build output
+# =========================
+.next/
+out/
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# =========================
+# Logs
+# =========================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs/
+
+# =========================
+# OS / Editor junk
+# =========================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.swn
+
+# =========================
+# IDE / Editor settings
+# =========================
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+.idea/
+*.iml
+
+# =========================
+# TypeScript
+# =========================
+*.tsbuildinfo
+
+# =========================
+# Cache / temp
+# =========================
+.cache/
+.tmp/
+.temp/
+
+# =========================
+# Coverage / testing
+# =========================
+coverage/
+
+# =========================
+# Build tools
+# =========================
+.turbo/
+.vercel/
+
+# =========================
+# Optional: lockfiles
+# =========================
+# Uncomment ONLY if you enforce a single package manager
+# yarn.lock
+# pnpm-lock.yaml
+# package-lock.json
