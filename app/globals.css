@@ -2,21 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
-}
-
-html,
-body {
-  min-height: 100%;
-}
+:root { color-scheme: dark; }
+html, body { min-height: 100%; }
 
 body {
   @apply bg-[#05060a] text-slate-100 antialiased;
   background-image:
-    radial-gradient(1100px 600px at -8% -10%, rgba(95, 150, 255, 0.35), transparent 55%),
-    radial-gradient(900px 540px at 105% 0%, rgba(174, 97, 255, 0.22), transparent 58%),
-    linear-gradient(180deg, #05060a 0%, #060811 52%, #05060b 100%);
+    radial-gradient(1300px 700px at -8% -15%, rgba(87, 140, 255, 0.38), transparent 55%),
+    radial-gradient(1100px 600px at 108% 6%, rgba(163, 89, 255, 0.26), transparent 59%),
+    linear-gradient(180deg, #04050a 0%, #060815 42%, #05070f 100%);
   background-attachment: fixed;
 }
 
@@ -26,44 +20,95 @@ body::before {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 88px 88px;
-  mask-image: radial-gradient(circle at 30% 20%, black 10%, transparent 85%);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.032) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 82px 82px;
+  mask-image: radial-gradient(circle at 36% 18%, black 12%, transparent 82%);
 }
 
-::selection {
-  background: rgba(125, 168, 255, 0.4);
+::selection { background: rgba(141, 176, 255, 0.45); }
+a { @apply text-inherit; }
+
+.focus-ring { @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060811]; }
+
+.orbital-rail {
+  @apply fixed right-3 top-1/2 z-50 flex -translate-y-1/2 flex-col gap-2 rounded-2xl border border-white/15 bg-[#070a14]/75 p-2 backdrop-blur-xl md:right-6;
 }
 
-a {
-  @apply text-inherit;
+.rail-home,
+.rail-link {
+  @apply relative inline-flex items-center gap-2 rounded-xl px-2.5 py-2 text-sm text-slate-200 transition hover:bg-white/10;
 }
 
-.focus-ring {
-  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060811];
+.rail-label {
+  @apply hidden pr-1 text-xs uppercase tracking-[0.17em] text-slate-300 md:block;
 }
 
-.glass-panel {
-  @apply rounded-[1.5rem] border border-white/10 bg-white/[0.035] shadow-soft;
-  backdrop-filter: blur(10px);
+.rail-active {
+  @apply absolute inset-0 -z-10 rounded-xl border border-white/20 bg-white/15;
 }
 
-.eyebrow {
-  @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-300;
-}
+.eyebrow { @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-300; }
 
 .text-gradient {
-  background: linear-gradient(95deg, #ecf4ff 5%, #96bdff 44%, #d3b8ff 88%);
+  background: linear-gradient(97deg, #f6fbff 8%, #90b9ff 48%, #d5b2ff 91%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.hero-shell::after {
-  content: "";
-  position: absolute;
-  inset: -15% 10% auto;
-  height: 220px;
-  background: radial-gradient(circle, rgba(161, 197, 255, 0.25), transparent 70%);
-  pointer-events: none;
+.scroll-meter {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 100%;
+  height: 3px;
+  transform-origin: 0%;
+  background: linear-gradient(90deg, #8eb2ff, #cf97ff);
 }
+
+.cursor-aura {
+  position: fixed;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(circle, rgba(125, 165, 255, 0.26), rgba(177, 108, 255, 0.08) 45%, rgba(0, 0, 0, 0) 70%);
+}
+
+.shape { position: absolute; pointer-events: none; filter: blur(1px); }
+.shape-a { top: -7rem; right: -6rem; width: 22rem; height: 22rem; border-radius: 38% 62% 46% 54% / 41% 33% 67% 59%; background: radial-gradient(circle at 35% 35%, rgba(175, 203, 255, 0.54), rgba(82, 105, 255, 0.12) 58%, transparent 78%); }
+.shape-b { bottom: 10%; right: 8%; width: 14rem; height: 14rem; border-radius: 63% 37% 52% 48% / 56% 43% 57% 44%; background: radial-gradient(circle at 40% 40%, rgba(196, 144, 255, 0.35), rgba(145, 86, 255, 0.06) 65%, transparent 79%); }
+.shape-c { left: -4rem; top: 1rem; width: 18rem; height: 18rem; border-radius: 50%; background: radial-gradient(circle, rgba(101, 145, 255, 0.2), transparent 70%); }
+
+.art-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  padding: 1.3rem;
+  backdrop-filter: blur(12px);
+}
+
+.art-card__glow { position: absolute; inset: 0; pointer-events: none; }
+
+.tile-chip { @apply rounded-2xl border border-white/10 bg-white/[0.035] p-4 text-left text-sm transition; }
+.tile-chip--active { @apply border-sky-300/40 bg-sky-300/10; }
+
+.icon-btn { @apply inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 bg-white/[0.04] text-slate-200 transition hover:bg-white/[0.14]; }
+.carousel-tile { @apply grid gap-6 rounded-[1.4rem] border border-white/10 bg-[#0a0f1e]/85 p-6 md:grid-cols-[1fr_.85fr] md:p-10; }
+
+.carousel-shape {
+  min-height: 220px;
+  border-radius: 34% 66% 59% 41% / 38% 51% 49% 62%;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(173, 207, 255, 0.45), transparent 34%),
+    radial-gradient(circle at 72% 24%, rgba(198, 156, 255, 0.32), transparent 36%),
+    linear-gradient(145deg, rgba(94, 129, 255, 0.27), rgba(180, 89, 255, 0.08));
+}
+
+.feature-tile { @apply rounded-[1.2rem] border border-white/10 bg-white/[0.03] p-5 text-left transition; transform-style: preserve-3d; }
+.feature-tile--active { @apply border-violet-200/40 bg-violet-300/10; }
