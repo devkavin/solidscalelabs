@@ -20,18 +20,17 @@ export function buttonVariants({
   className?: string;
 }) {
   const base =
-    "focus-ring inline-flex items-center justify-center gap-2 rounded-full border transition will-change-transform active:translate-y-[1px] disabled:pointer-events-none disabled:opacity-60";
+    "focus-ring inline-flex items-center justify-center gap-2 rounded-full border font-medium transition duration-200 active:translate-y-px disabled:pointer-events-none disabled:opacity-60";
   const variants: Record<string, string> = {
     primary:
-      "border-white/10 bg-gradient-to-r from-sky-300 to-violet-500 text-slate-950 font-semibold shadow-[0_18px_60px_rgba(56,189,248,.22)] hover:brightness-105",
-    secondary:
-      "border-white/12 bg-white/[0.06] text-slate-100 hover:bg-white/[0.11]",
-    ghost: "border-white/10 bg-transparent hover:bg-white/[0.06]",
+      "border-sky-100/20 bg-gradient-to-r from-sky-200 via-blue-300 to-violet-300 text-slate-900 shadow-[0_14px_36px_rgba(113,158,255,.28)] hover:brightness-105",
+    secondary: "border-white/15 bg-white/[0.04] text-slate-100 hover:bg-white/[0.1]",
+    ghost: "border-transparent bg-transparent text-slate-300 hover:border-white/10 hover:bg-white/[0.06]",
   };
   const sizes: Record<string, string> = {
     sm: "h-9 px-4 text-sm",
     md: "h-10 px-5 text-sm",
-    lg: "h-11 px-6 text-base",
+    lg: "h-12 px-6 text-base",
   };
   return cn(base, variants[variant], sizes[size], className);
 }

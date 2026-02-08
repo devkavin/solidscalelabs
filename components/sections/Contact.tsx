@@ -26,10 +26,10 @@ export function Contact() {
       if (!res.ok) throw new Error("Request failed");
 
       (e.currentTarget as HTMLFormElement).reset();
-      setMsg({ title: "Message sent", desc: "We’ll respond with a plan and next steps." });
+      setMsg({ title: "Message sent", desc: "We’ll reply with a scoped roadmap and timeline." });
       setOpen(true);
     } catch {
-      setMsg({ title: "Couldn’t send", desc: "Try again, or wire this form to your email/CRM." });
+      setMsg({ title: "Couldn’t send", desc: "Please retry or connect this form to your CRM provider." });
       setOpen(true);
     } finally {
       setLoading(false);
@@ -37,53 +37,27 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="py-16">
+    <section id="contact" className="py-16 md:py-20">
       <Toast open={open} title={msg.title} description={msg.desc} onClose={() => setOpen(false)} />
       <div className="container">
-        <div className="card p-6 md:p-8">
-          <div className="grid gap-8 md:grid-cols-[1.05fr_.95fr] md:items-start">
+        <div className="glass-panel p-6 md:p-8">
+          <div className="grid gap-8 lg:grid-cols-[.95fr_1.05fr]">
             <div>
-              <div className="badge"><span className="font-mono text-[11px] tracking-[0.18em]">CONTACT</span></div>
-              <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight md:text-4xl">Let’s craft an experience your market remembers.</h2>
-              <p className="mt-3 max-w-2xl text-pretty text-base text-slate-300">
-                Share your goals and constraints. We’ll respond with a focused UX + engineering plan and rollout path.
+              <span className="eyebrow">Contact</span>
+              <h2 className="mt-4 text-3xl font-semibold text-white md:text-5xl">Ready for a world-class product presence?</h2>
+              <p className="mt-4 text-slate-300">
+                Tell us what you are building and where the current experience falls short. We will return a concise strategy with design and implementation phases.
               </p>
-
-              <div className="mt-6 grid gap-3 text-sm text-slate-300">
-                <div className="rounded-2xl border border-white/10 bg-black/20 p-4">
-                  <div className="text-xs font-mono tracking-[0.16em] text-slate-400">ENGAGEMENT BLUEPRINT</div>
-                  <ul className="mt-2 grid gap-2">
-                    <li>• Clear scope + deliverables</li>
-                    <li>• UX-focused layout + components</li>
-                    <li>• Production-ready project setup</li>
-                    <li>• Deployment guidance</li>
-                  </ul>
-                </div>
-              </div>
             </div>
-
-            <div>
-              <form onSubmit={onSubmit} className="grid gap-3">
-                <Input name="name" placeholder="Your name" required />
-                <Input name="email" type="email" placeholder="Work email" required />
-                <Input name="company" placeholder="Company (optional)" />
-                <Textarea name="message" placeholder="What do you need built? Include timeline + constraints." required />
-                <Button type="submit" variant="primary" size="lg" disabled={loading}>
-                  {loading ? "Sending…" : "Send request"}
-                </Button>
-                <div className="text-xs text-slate-400">
-                  This demo posts to <span className="font-mono">/api/contact</span>. Replace with your CRM/email service.
-                </div>
-              </form>
-
-              <div className="hr my-6" />
-
-              <div className="grid gap-2 text-sm text-slate-300">
-                <div><span className="font-mono text-slate-400">Email:</span> hello@solidscalelabs.com</div>
-                <div><span className="font-mono text-slate-400">Availability:</span> Weekdays • Remote-friendly</div>
-                <div><span className="font-mono text-slate-400">Start:</span> Typically 7–14 days</div>
-              </div>
-            </div>
+            <form onSubmit={onSubmit} className="grid gap-3">
+              <Input name="name" placeholder="Your name" required />
+              <Input name="email" type="email" placeholder="Work email" required />
+              <Input name="company" placeholder="Company" />
+              <Textarea name="message" placeholder="Goals, constraints, and timeline" required />
+              <Button type="submit" variant="primary" size="lg" disabled={loading}>
+                {loading ? "Sending..." : "Request proposal"}
+              </Button>
+            </form>
           </div>
         </div>
       </div>

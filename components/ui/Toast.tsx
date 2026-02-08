@@ -14,12 +14,12 @@ export function Toast({ open, title, description, onClose }: { open: boolean; ti
     <div
       className={cn(
         "pointer-events-none fixed inset-x-0 top-4 z-[60] mx-auto flex max-w-xl justify-center px-4 transition",
-        open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+        open ? "translate-y-0 opacity-100" : "-translate-y-2 opacity-0"
       )}
       aria-live="polite"
     >
-      <div className="pointer-events-auto card w-full px-5 py-4 shadow-glow">
-        <div className="text-sm font-semibold">{title}</div>
+      <div className="pointer-events-auto w-full rounded-2xl border border-white/15 bg-[#0e1222]/95 px-5 py-4 shadow-soft backdrop-blur">
+        <div className="text-sm font-semibold text-white">{title}</div>
         {description ? <div className="mt-1 text-sm text-slate-300">{description}</div> : null}
       </div>
     </div>
