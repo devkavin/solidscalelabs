@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import { ArrowRight, ChevronDown, ChevronLeft, ChevronRight, MousePointer2, Sparkles, WandSparkles } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, MousePointer2, Sparkles, WandSparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Contact } from "@/components/sections/Contact";
 import { cn } from "@/lib/utils";
@@ -95,7 +95,7 @@ export default function Page() {
   const [mode, setMode] = React.useState<(typeof modes)[number]>(modes[0]);
   const [intensity, setIntensity] = React.useState(62);
   const [velocity, setVelocity] = React.useState(48);
-  const [openFaq, setOpenFaq] = React.useState<number | null>(null);
+  const [activeFaq, setActiveFaq] = React.useState(0);
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 20, mass: 0.15 });
 
@@ -301,24 +301,62 @@ export default function Page() {
             <span className="eyebrow">FAQ // Neural Briefing</span>
             <h2 className="mt-4 max-w-3xl text-3xl font-semibold text-white md:text-5xl">Questions teams ask before shipping a future-ready platform.</h2>
             <p className="mt-4 max-w-2xl text-slate-300">Clear answers on delivery, technical fit, and measurable impact so you can move from idea to execution with confidence.</p>
-            <div className="mt-8 grid gap-3">
-              {faqs.map((entry, index) => {
-                const isOpen = openFaq === index;
-                return (
-                  <div key={entry.q} className="rounded-2xl border border-white/15 bg-black/25 backdrop-blur-sm">
+            <div className="mt-8 grid gap-4 lg:grid-cols-[0.95fr_1.05fr]">
+              <div className="space-y-3">
+                {faqs.map((entry, index) => {
+                  const isActive = activeFaq === index;
+                  return (
                     <button
-                      className="focus-ring flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
-                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                      key={entry.q}
+                      className={cn(
+                        "focus-ring w-full rounded-2xl border px-5 py-4 text-left transition duration-300",
+                        isActive
+                          ? "border-sky-300/70 bg-sky-500/10 shadow-[0_0_0_1px_rgba(147,197,253,0.2)]"
+                          : "border-white/15 bg-black/25 hover:border-white/35 hover:bg-black/35",
+                      )}
+                      onClick={() => setActiveFaq(index)}
+                      aria-pressed={isActive}
                     >
                       <span className="text-sm font-semibold text-white md:text-base">{entry.q}</span>
-                      <ChevronDown className={cn("transition", isOpen ? "rotate-180 text-sky-200" : "text-slate-300")} size={18} />
                     </button>
-                    <div className={cn("grid transition-all duration-300", isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
-                      <div className="overflow-hidden px-5 pb-4 text-sm text-slate-300">{entry.a}</div>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+
+              <div className="rounded-2xl border border-white/15 bg-black/25 p-5 md:p-6">
+                <p className="text-xs uppercase tracking-[0.22em] text-slate-400">Selected answer</p>
+                <motion.h3
+                  key={faqs[activeFaq].q}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.25 }}
+                  className="mt-4 text-xl font-semibold text-white"
+                >
+                  {faqs[activeFaq].q}
+                </motion.h3>
+                <motion.p
+                  key={faqs[activeFaq].a}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.05 }}
+                  className="mt-3 text-sm leading-7 text-slate-300 md:text-base"
+                >
+                  {faqs[activeFaq].a}
+                </motion.p>
+                <div className="mt-6 flex gap-2">
+                  {faqs.map((entry, index) => (
+                    <button
+                      key={entry.q}
+                      aria-label={`Jump to question ${index + 1}`}
+                      onClick={() => setActiveFaq(index)}
+                      className={cn(
+                        "h-1.5 flex-1 rounded-full transition",
+                        activeFaq === index ? "bg-sky-200" : "bg-white/20 hover:bg-white/45",
+                      )}
+                    />
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
