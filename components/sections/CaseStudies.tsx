@@ -33,9 +33,9 @@ export function CaseStudies() {
     <section id="work" className="py-16">
       <div className="container">
         <div className="badge"><span className="font-mono text-[11px] tracking-[0.18em]">WORK</span></div>
-        <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight md:text-4xl">What this looks like in practice.</h2>
+        <h2 className="mt-4 text-balance text-3xl font-extrabold tracking-tight md:text-4xl">Transformation previews.</h2>
         <p className="mt-3 max-w-3xl text-pretty text-base text-slate-300">
-          Sample engagements. Swap these with your real case studies as you ship projects.
+          High-impact concepts showing how product thinking and premium UI drive measurable outcomes.
         </p>
 
         <div className="mt-8 grid gap-4 md:grid-cols-[1.05fr_.95fr]">
@@ -73,8 +73,8 @@ export function CaseStudies() {
           </div>
 
           <div className="card p-6">
-            <div className="text-sm font-extrabold">Index</div>
-            <p className="mt-1 text-sm text-slate-300">Click an item to preview.</p>
+            <div className="text-sm font-extrabold">Showcase index</div>
+            <p className="mt-1 text-sm text-slate-300">Browse concepts and inspect narrative direction.</p>
             <div className="hr my-4" />
             <div className="grid gap-2">
               {items.map((x, i) => (
