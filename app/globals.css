@@ -2,14 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
-}
-
-html,
-body {
-  min-height: 100%;
-}
+:root { color-scheme: dark; }
+html, body { min-height: 100%; }
 
 body {
   @apply bg-[#05060a] text-slate-100 antialiased;
@@ -35,12 +29,13 @@ body::before {
   background: rgba(141, 176, 255, 0.45);
 }
 
-a {
-  @apply text-inherit;
+.orbital-rail {
+  @apply fixed right-3 top-1/2 z-50 flex -translate-y-1/2 flex-col gap-2 rounded-2xl border border-white/15 bg-[#070a14]/75 p-2 backdrop-blur-xl md:right-6;
 }
 
-.focus-ring {
-  @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-200/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060811];
+.rail-home,
+.rail-link {
+  @apply relative inline-flex items-center gap-2 rounded-xl px-2.5 py-2 text-sm text-slate-200 transition hover:bg-white/10;
 }
 
 .site-brand {
@@ -59,9 +54,11 @@ a {
   @apply absolute inset-0 -z-10 rounded-full border border-white/20 bg-white/15;
 }
 
-.eyebrow {
-  @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-300;
+.rail-active {
+  @apply absolute inset-0 -z-10 rounded-xl border border-white/20 bg-white/15;
 }
+
+.eyebrow { @apply inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-300; }
 
 .text-gradient {
   background: linear-gradient(97deg, #f6fbff 8%, #90b9ff 48%, #d5b2ff 91%);
@@ -169,3 +166,6 @@ a {
   @apply rounded-[1.1rem] border border-white/10 bg-white/[0.035] p-5 shadow-soft md:p-7;
   backdrop-filter: blur(8px);
 }
+
+.feature-tile { @apply rounded-[1.2rem] border border-white/10 bg-white/[0.03] p-5 text-left transition; transform-style: preserve-3d; }
+.feature-tile--active { @apply border-violet-200/40 bg-violet-300/10; }
