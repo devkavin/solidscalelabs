@@ -4,9 +4,10 @@ import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Compass, Gem, Mail } from "lucide-react";
+import { Compass, Gem, Home, Mail, Sparkles } from "lucide-react";
 
 const navLinks = [
+  { href: "#top", label: "Hero", icon: Home },
   { href: "#carousel", label: "Carousel", icon: Compass },
   { href: "#tiles", label: "Tiles", icon: Gem },
   { href: "#contact", label: "Contact", icon: Mail },
@@ -14,6 +15,7 @@ const navLinks = [
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const [activeLink, setActiveLink] = React.useState(navLinks[0].href);
+  const [railOpen, setRailOpen] = React.useState(false);
 
   React.useEffect(() => {
     const sections = navLinks
@@ -41,39 +43,46 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <header className="site-brand">
-        <Link href="/" className="flex items-center gap-3">
-          <Image src="/logo.png" alt="Solid Scale Labs" width={38} height={38} className="rounded-xl border border-white/20 bg-white/10" />
-          <div className="leading-tight">
-            <div className="text-sm font-semibold tracking-wide">Solid Scale Labs</div>
-            <div className="text-xs text-slate-400">Interactive experience studio</div>
-          </div>
-        </Link>
-      </header>
-
-      <motion.nav
-        initial={{ y: 30, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.45, delay: 0.15 }}
-        className="floating-dock"
-        aria-label="Primary"
+      <motion.aside
+        initial={{ x: 26, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 0.45, delay: 0.12 }}
+        className="orbital-rail" data-open={railOpen}
+        aria-label="Experience navigation"
       >
-        {navLinks.map((link) => {
-          const isActive = activeLink === link.href;
+        <div className="flex items-center justify-between gap-2">
+          <Link href="/" className="rail-home focus-ring" aria-label="Back to top">
+            <Image src="/logo.png" alt="Solid Scale Labs" width={30} height={30} className="rounded-lg border border-white/20 bg-white/10" />
+            {railOpen && (
+              <div className="leading-tight">
+                <div className="text-sm font-semibold tracking-wide text-white">Solid Scale Labs</div>
+                <div className="text-[11px] text-slate-400">Interactive studio</div>
+              </div>
+            )}
+          </Link>
+          <button onClick={() => setRailOpen((prev) => !prev)} className="icon-btn focus-ring h-9 w-9" aria-label="Toggle nav labels">
+            <Sparkles size={15} />
+          </button>
+        </div>
 
-          return (
-            <a key={link.href} href={link.href} className="focus-ring dock-item" aria-current={isActive ? "page" : undefined}>
-              <link.icon size={16} className={isActive ? "text-white" : "text-slate-300"} />
-              <span>{link.label}</span>
-              {isActive && <motion.span layoutId="dock-pill" className="dock-pill" />}
-            </a>
-          );
-        })}
-      </motion.nav>
+        <div className="mt-1 grid gap-1">
+          {navLinks.map((link) => {
+            const isActive = activeLink === link.href;
+
+            return (
+              <a key={link.href} href={link.href} className="focus-ring rail-link" aria-current={isActive ? "page" : undefined}>
+                <link.icon size={16} className={isActive ? "text-white" : "text-slate-300"} />
+                {railOpen && <span>{link.label}</span>}
+                {isActive && <motion.span layoutId="rail-active" className="rail-active" />}
+              </a>
+            );
+          })}
+        </div>
+      </motion.aside>
 
       <main>{children}</main>
 
-      <footer className="border-t border-white/10 bg-black/25 pb-28 md:pb-12">
+      <footer className="border-t border-white/10 bg-black/25 pb-12">
         <div className="container py-10 text-sm text-slate-400">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <p>© {new Date().getFullYear()} Solid Scale Labs</p>
